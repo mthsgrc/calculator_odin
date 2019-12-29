@@ -2,12 +2,12 @@
 /* eslint-disable no-console */
 
 const resultDisplay = document.querySelector(".result-display");
+const displayValue = document.querySelector(".display-value")
 const numberBtns = document.querySelectorAll(".number-btn");
 const operatorBtns = document.querySelectorAll(".operator-btn");
 const equalsBtn = document.querySelector(".equals-btn");
 const clearBtn = document.querySelector(".clear-btn");
 
-let displayValue = 0;
 let firstValue = 0;
 let secondValue = 0;
 let operator;
@@ -16,8 +16,7 @@ let total = 0;
 clearCalc();
 
 function clearCalc() {
-    resultDisplay.textContent = 0;
-    displayValue = 0;
+    displayValue.textContent = "";
     firstValue = 0;
     secondValue = 0;
     total = 0;
@@ -61,30 +60,35 @@ function operate(x, y, operator) {
     return result;
 }
 
-function checkPeriod() {
-    let checkArray = Array.from(firstValue);
-    return checkArray.includes('.');
+function checkPeriod(value) {
+    let toTest = value;
+    if (toTest.indexOf(".") !== -1) {
+        //console.log('Found . in string')
+    } else {
+        //console.log('Not . found')
+    }
 }
+
 
 function populate(value) {
     //value == number
     //is there a . in resultDisplay?
-    //	
-    if (checkPeriod(firstValue)) {
+    if (displayValue.textContent.indexOf(".") !== -1 && value == ".") {
         //do nothing
     } else {
-
-        resultDisplay.textContent += value;
+        displayValue.textContent += value;
     }
 
-    firstValue = +resultDisplay.textContent;
 }
+
+
 
 
 numberBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
+        //take value os button
         let btnValue = e.target.innerText;
-
+        //send to display
         populate(btnValue);
 
     });
@@ -93,7 +97,9 @@ numberBtns.forEach((btn) => {
 
 operatorBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
+        let operatorValue = e.target.innerText;
 
+        callOperator()
     });
 });
 
