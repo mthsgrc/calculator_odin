@@ -65,7 +65,7 @@ function operate(x, y, operator) {
         default:
             break;
     }
-    total = result;
+    total = result.toFixed(3);
 }
 
 
@@ -152,6 +152,5 @@ equalsBtn.addEventListener("click", () => {
     displayValueTemp.textContent = total;
     displayFirstValue.textContent = "";
     displayOperator.textContent = ""; 
-
 
 });
