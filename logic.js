@@ -12,7 +12,7 @@ const clearBtn = document.querySelector(".clear-btn");
 
 let firstValue = 0;
 let secondValue = 0;
-let operator = "";
+let operatorValue = "";
 let total = 0;
 
 clearCalc();
@@ -23,8 +23,8 @@ function clearCalc() {
     displayOperator.textContent = "";
     firstValue = 0;
     secondValue = 0;
+    operatorValue = "";
     total = 0;
-    operator = "";
 }
 
 function add(x, y) {
@@ -41,14 +41,14 @@ function multiply(x, y) {
 
 function divide(x, y) {
     if (y == 0) {
-        total == "ERROR!"
+        return "ERROR!"
     } else {
         return (x / y);
     }
 }
 
 function operate(x, y, operator) {
-    let result = 0;
+	let result;
     switch (operator) {
         case "+":
             result = add(x, y);
@@ -65,7 +65,7 @@ function operate(x, y, operator) {
         default:
             break;
     }
-    return result;
+    total = result;
 }
 
 
@@ -105,31 +105,53 @@ numberBtns.forEach((btn) => {
 
 operatorBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
-        let operatorValue = e.target.innerText;
+        let operatorSymbol = e.target.innerText;
 
-        if (displayFirstValue.textContent == false) {
-            displayFirstValue.textContent = displayValueTemp.textContent;
-            firstValue = +displayValueTemp.textContent
-
-            displayOperator.textContent = operatorValue;
-            operator = displayOperator.textContent;
-            displayValueTemp.textContent = "";
-
-        } else {
-            displayOperator.textContent = operatorValue;
-            operator = operatorValue;
-            displayValueTemp.textContent = "";
-
-        }
+        insertOperator(operatorSymbol);
 
     });
 });
 
 
+function insertOperator(operator) {
+    if (displayFirstValue.textContent == false) {
+        displayFirstValue.textContent = displayValueTemp.textContent;
+        firstValue = +displayValueTemp.textContent
+
+        displayOperator.textContent = operator;
+        operatorValue = displayOperator.textContent;
+        displayValueTemp.textContent = "";
+
+    } else if (displayFirstValue.textContent == true && operator !== false) {
+
+        secondValue = displayValueTemp.textContent;
+
+    	operate(firstValue, secondValue, operatorValue);
+
+    	displayValueTemp.textContent = total;
+
+
+    } else {
+        displayOperator.textContent = operator;
+        operatorValue = operator;
+        displayValueTemp.textContent = "";
+
+    }
+}
 clearBtn.addEventListener("click", () => {
     clearCalc();
 });
 
 equalsBtn.addEventListener("click", () => {
+	secondValue = +displayValueTemp.textContent;
+
     operate(firstValue, secondValue, operatorValue);
-})
+
+    firstValue = total;
+
+    displayValueTemp.textContent = total;
+    displayFirstValue.textContent = "";
+    displayOperator.textContent = ""; 
+
+
+});
