@@ -2,7 +2,9 @@
 /* eslint-disable no-console */
 
 const resultDisplay = document.querySelector(".result-display");
-const displayValue = document.querySelector(".display-value")
+const displayFirstValue = document.querySelector(".display-first-value");
+const displayValueTemp = document.querySelector(".display-value-typing");
+const displayOperator = document.querySelector(".display-operator");
 const numberBtns = document.querySelectorAll(".number-btn");
 const operatorBtns = document.querySelectorAll(".operator-btn");
 const equalsBtn = document.querySelector(".equals-btn");
@@ -10,13 +12,15 @@ const clearBtn = document.querySelector(".clear-btn");
 
 let firstValue = 0;
 let secondValue = 0;
-let operator;
+let operator = "";
 let total = 0;
 
 clearCalc();
 
 function clearCalc() {
-    displayValue.textContent = "";
+    displayFirstValue.textContent = null;
+    displayValueTemp.textContent = "";
+    displayOperator.textContent = "";
     firstValue = 0;
     secondValue = 0;
     total = 0;
@@ -36,7 +40,11 @@ function multiply(x, y) {
 }
 
 function divide(x, y) {
-    return (x / y);
+    if (y == 0) {
+        total == "ERROR!"
+    } else {
+        return (x / y);
+    }
 }
 
 function operate(x, y, operator) {
@@ -60,12 +68,14 @@ function operate(x, y, operator) {
     return result;
 }
 
+
+// Already in populate()
 function checkPeriod(value) {
     let toTest = value;
-    if (toTest.indexOf(".") !== -1) {
-        //console.log('Found . in string')
+    if (value.textContent.indexOf(".") !== -1 && value == ".") {
+        //do nothing
     } else {
-        //console.log('Not . found')
+        value.textContent += value;
     }
 }
 
@@ -73,15 +83,13 @@ function checkPeriod(value) {
 function populate(value) {
     //value == number
     //is there a . in resultDisplay?
-    if (displayValue.textContent.indexOf(".") !== -1 && value == ".") {
+    if (displayValueTemp.textContent.indexOf(".") !== -1 && value == ".") {
         //do nothing
     } else {
-        displayValue.textContent += value;
+        displayValueTemp.textContent += value;
     }
 
 }
-
-
 
 
 numberBtns.forEach((btn) => {
@@ -99,7 +107,21 @@ operatorBtns.forEach((btn) => {
     btn.addEventListener("click", (e) => {
         let operatorValue = e.target.innerText;
 
-        callOperator()
+        if (displayFirstValue.textContent == false) {
+            displayFirstValue.textContent = displayValueTemp.textContent;
+            firstValue = +displayValueTemp.textContent
+
+            displayOperator.textContent = operatorValue;
+            operator = displayOperator.textContent;
+            displayValueTemp.textContent = "";
+
+        } else {
+            displayOperator.textContent = operatorValue;
+            operator = operatorValue;
+            displayValueTemp.textContent = "";
+
+        }
+
     });
 });
 
@@ -109,5 +131,5 @@ clearBtn.addEventListener("click", () => {
 });
 
 equalsBtn.addEventListener("click", () => {
-    operate();
+    operate(firstValue, secondValue, operatorValue);
 })
