@@ -48,7 +48,7 @@ function divide(x, y) {
 }
 
 function operate(x, y, operator) {
-	let result;
+    let result;
     switch (operator) {
         case "+":
             result = add(x, y);
@@ -60,6 +60,7 @@ function operate(x, y, operator) {
             result = multiply(x, y);
             break;
         case "/":
+            if (y == 0) { return total = "ERROR" }
             result = divide(x, y);
             break;
         default:
@@ -126,9 +127,9 @@ function insertOperator(operator) {
 
         secondValue = displayValueTemp.textContent;
 
-    	operate(firstValue, secondValue, operatorValue);
+        operate(firstValue, secondValue, operatorValue);
 
-    	displayValueTemp.textContent = total;
+        displayValueTemp.textContent = total;
 
 
     } else {
@@ -143,7 +144,7 @@ clearBtn.addEventListener("click", () => {
 });
 
 equalsBtn.addEventListener("click", () => {
-	secondValue = +displayValueTemp.textContent;
+    secondValue = +displayValueTemp.textContent;
 
     operate(firstValue, secondValue, operatorValue);
 
@@ -151,6 +152,6 @@ equalsBtn.addEventListener("click", () => {
 
     displayValueTemp.textContent = total;
     displayFirstValue.textContent = "";
-    displayOperator.textContent = ""; 
+    displayOperator.textContent = "";
 
 });
