@@ -6,6 +6,17 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "Cute Font";
+    src: url("https://fonts.googleapis.com/css?family=Cute+Font&display=swap");
+}
+
+@font-face {
+    font-family: "Digital 7";
+    src: url("fonts/digital-7.ttf");
+}
+
+
 .calculator-wrap {
     display: grid;
 
@@ -14,20 +25,37 @@
 
     grid-template-columns: repeat(4, 25%);
     grid-template-rows: repeat(5, 20%);
+    gap: 1px;
 }
 
 .btn {
     padding: 5px;
-
+    background-color: #BBB;
     border: 1px solid black;
-    border-radius: 5px;
-    /* align-self: center;
-    /* place-self: center; */
+    border-radius: 2px;
+}
+
+.btn:hover {
+    background-color: #AAA;
+}
+
+.operator-btn, .clear-btn {
+    background-color: #999;
+}
+
+.clear-btn {
+    color: #900;
+    font-weight: 800;
+    font-family: monospace;
+    font-size: 1.5em;
 }
 
 .result-display {
     /* align-self: center; */
     /* place-self: center; */
+    font-family: "Digital 7", monospace;
+    font-size: 1.5em;
+    background-color: #ACA;
 
     padding: 5px;
 
